@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bne1j05qgw3d0"]
+
+[ext_resource type="Texture2D" uid="uid://cyuhuvb8xr8ce" path="res://Ninja Adventure - Asset Pack/Actor/Characters/NinjaGreen/SpriteSheet.png" id="1_8058p"]
+[ext_resource type="Script" path="res://players/player.gd" id="1_x6tpo"]
+
+[node name="Player" type="CharacterBody2D"]
+texture_filter = 1
+script = ExtResource("1_x6tpo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8058p")
+hframes = 4
+vframes = 7
