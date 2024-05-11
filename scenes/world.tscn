@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://wge22rtbyauv"]
 
 [ext_resource type="PackedScene" uid="uid://bne1j05qgw3d0" path="res://players/player.tscn" id="1_0okio"]
-[ext_resource type="Texture2D" uid="uid://cjmx7f5rk3l7y" path="res://Ninja Adventure - Asset Pack/Backgrounds/Tilesets/TilesetFloor.png" id="2_83t0h"]
-[ext_resource type="Texture2D" uid="uid://do1yyalrw7ylx" path="res://Ninja Adventure - Asset Pack/Backgrounds/Animated/Plant/animatedflower.png" id="3_g5bch"]
-[ext_resource type="Texture2D" uid="uid://48uha6ib1hcn" path="res://Ninja Adventure - Asset Pack/Backgrounds/Tilesets/TilesetNature.png" id="3_kinkb"]
+[ext_resource type="Texture2D" uid="uid://cjmx7f5rk3l7y" path="res://assets/TilesetFloor.png" id="2_83t0h"]
+[ext_resource type="Texture2D" uid="uid://do1yyalrw7ylx" path="res://assets/animatedflower.png" id="3_g5bch"]
+[ext_resource type="Texture2D" uid="uid://48uha6ib1hcn" path="res://assets/TilesetNature.png" id="3_kinkb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_78omg"]
 texture = ExtResource("2_83t0h")
@@ -470,7 +470,8 @@ texture = ExtResource("2_83t0h")
 texture = ExtResource("3_kinkb")
 0:0/size_in_atlas = Vector2i(2, 2)
 0:0/0 = 0
-0:0/0/texture_origin = Vector2i(-8, -8)
+0:0/0/texture_origin = Vector2i(-8, 8)
+0:0/0/y_sort_origin = 7
 2:0/0 = 0
 3:0/0 = 0
 4:0/0 = 0
@@ -868,6 +869,7 @@ sources/3 = SubResource("TileSetAtlasSource_50aoy")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
+position = Vector2(-31, -16)
 tile_set = SubResource("TileSet_akdiu")
 format = 2
 layer_0/name = "ground"
@@ -880,4 +882,4 @@ layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array(131078, 1, 0, 393219, 1, 0, 393226, 1, 0, 131085, 1, 0)
 
 [node name="Player" parent="TileMap" instance=ExtResource("1_0okio")]
-position = Vector2(106, 69)
+position = Vector2(191, 107)
