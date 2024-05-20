@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var endPoint : Marker2D 
 var startPosition
 var endPosition
-@onready var animations = $AnimatedSprite2D
+@onready var animations = $AnimationPlayer
 
 func _ready():
 	startPosition = position
@@ -23,11 +23,18 @@ func updateVelocity():
 	if moveDirection.length() < limit :
 		changeDirection()
 
+
 func updateAnimation():
-	var animationString = "walkUp"
-	if velocity.y > 0:
-		animationString = "walkDown"
-	animations.play(animationString)
+	if velocity.length() ==0: #当向量长度为00时，停止动画
+		if animations.is_playing():
+			animations.stop()
+	else:
+		var direction = "Down"
+		if velocity.x < 0: direction = "Left"
+		elif velocity.x > 0: direction = "Right"
+		elif velocity.y < 0: direction = "Up"
+	
+		animations.play("walk" + direction)
 
 func _physics_process(delta):
 	updateVelocity()
