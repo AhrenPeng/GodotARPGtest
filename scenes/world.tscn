@@ -2858,6 +2858,7 @@ position = Vector2(191, 107)
 maxHealth = 5
 
 [node name="follow cam" type="Camera2D" parent="TileMap/Player" node_paths=PackedStringArray("tilemap")]
+zoom = Vector2(2, 2)
 limit_left = 0
 limit_top = 0
 limit_smoothed = true
