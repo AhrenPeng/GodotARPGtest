@@ -9,9 +9,12 @@ signal  healthChanged
 @export var maxHealth =3
 @onready var currentHealth: int = maxHealth
 @onready var effects = $Effects
+@onready var hurtBox = $hurtBox
 @onready var hurtTimer = $hurtTimer
 
 @export var knockbackPower: int = 500
+
+var isHurt: bool = false
 
 func _ready():
 	effects.play("RESET")
@@ -38,35 +41,41 @@ func handleCollision():
 		var collider = collision.get_collider()
 		print_debug(collider.name)
 		
-func _physics_process(delta):
+func _physics_process(_delta):
 	handleInput()
 	move_and_slide()
 	handleCollision()
 	updateAnimation()
+	if !isHurt:
+		for area in hurtBox.get_overlapping_areas():
+			if area.name == "hitBox":
+				hurtByEnemy(area)
+	
+func hurtByEnemy(area):
+	currentHealth -= 1
+	if currentHealth <0:
+		currentHealth = maxHealth
+	#print_debug(currentHealth)
+	healthChanged.emit(currentHealth)
+	isHurt = true 
+	
+	knockback(area.get_parent().velocity)
+	effects.play("hurtBlink")
+	hurtTimer.start()
+	await hurtTimer.timeout
+	effects.play("RESET")
+	isHurt = false
 
-
-func _on_hurt_box_area_entered(area):
-	if area.name == "hitBox":
-		#print_debug(area.get_parent().name)
-		currentHealth -= 1
-		if currentHealth <0:
-			currentHealth = maxHealth
-		#print_debug(currentHealth)
-		healthChanged.emit(currentHealth)
-		knockback(area.get_parent().velocity)
-		effects.play("hurtBlink")
-		hurtTimer.start()
-		await hurtTimer.timeout
-		effects.play("RESET")
+func _on_hurt_box_area_entered(area): 
+	if area.has_method("collect"):
+		area.collect()
 		
 		
 		
 func knockback(enemyVelocity: Vector2):
 	var knockbackDirection = (enemyVelocity - velocity).normalized() * knockbackPower
 	velocity = knockbackDirection
-	print_debug(velocity)
-	print_debug(position)
 	move_and_slide()
-	print_debug(position)
-	move_and_slide()
-	print_debug(" ")
+
+func _on_hurt_box_area_exited(area):
+	pass
