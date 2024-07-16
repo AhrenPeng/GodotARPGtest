@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://wge22rtbyauv"]
+[gd_scene load_steps=18 format=3 uid="uid://wge22rtbyauv"]
 
 [ext_resource type="PackedScene" uid="uid://bne1j05qgw3d0" path="res://players/player.tscn" id="1_0okio"]
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_276yb"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://players/follow cam.gd" id="5_fpckr"]
 [ext_resource type="PackedScene" uid="uid://11lxdgpsxsbq" path="res://scenes/sword.tscn" id="5_kvfbv"]
 [ext_resource type="PackedScene" uid="uid://bjwfoi5ieiv0y" path="res://gui/hearts_container.tscn" id="7_wilgk"]
+[ext_resource type="Script" path="res://scenes/CanvasLayer.gd" id="10_bhlcw"]
+[ext_resource type="PackedScene" uid="uid://cv1yvja5wli43" path="res://scenes/inventory_gui.tscn" id="11_xfdgq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_78omg"]
 texture = ExtResource("2_83t0h")
@@ -2867,9 +2869,27 @@ script = ExtResource("5_fpckr")
 tilemap = NodePath("../..")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("10_bhlcw")
 
 [node name="heartsContainer" parent="CanvasLayer" instance=ExtResource("7_wilgk")]
 anchors_preset = 0
 anchor_left = 0.0
 anchor_right = 0.0
 grow_horizontal = 1
+
+[node name="InventoryGui" parent="CanvasLayer" instance=ExtResource("11_xfdgq")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -43.5
+offset_right = 69.0
+offset_bottom = 43.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="closed" from="CanvasLayer/InventoryGui" to="." method="_on_inventory_gui_closed"]
+[connection signal="opened" from="CanvasLayer/InventoryGui" to="." method="_on_inventory_gui_opened"]
